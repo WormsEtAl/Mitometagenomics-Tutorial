@@ -64,7 +64,7 @@ quast.py contigs.fasta -o quast_results
 ### BLASTn against the Nema-mtDB
 blastn \
 <br/>-query mito-contigs.fasta \
-<br/>-subject custom_mito_db.fasta \
+<br/>-subject Nema-mt-DB_v1.0.fasta \
 <br/>-oufmt "6 qseqid sseqid pident qcovs length qstart qend sstart send gaps bitscore evalue" \
 <br/>-out blastn_output.tsv
 
