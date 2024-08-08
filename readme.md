@@ -1,7 +1,6 @@
 # Mitochondrial Metagenomics Tutorial
 ## Required Software
-Unix OS or Unix Emulator
--Fastqc
+Unix OS or Unix Emulator< br / >Fastqc
 -trimmomatic
 -Spades 
 -BLASTn and BLASTx
