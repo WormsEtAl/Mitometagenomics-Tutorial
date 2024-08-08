@@ -18,9 +18,9 @@ conda activate ENVIRONMENT_NAME
 ## Create  two column table of tab delimited lists identifying matching well and sample IDs
 ### Should look something like this:
 A1	1EA
-B1	1EB
-C1	1EC
-D1	1ED
+  B1	1EB
+  C1	1EC
+  D1	1ED
 
 ## Attach sampleIDs to their corresponding sequence file
 for file in *.fastq
