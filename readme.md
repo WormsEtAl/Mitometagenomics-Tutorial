@@ -97,7 +97,7 @@ Upload the candidate nematode contig sequences to the MITOS server for annotatio
 
 ## Phylogenetic Confirmation
 ### Extract relevant reference sequences using target taxonomic rank and gene
-grep --no-group-separator -A 1 "$taxa_rank_name" Nemat-mtDB_v#.#.fasta | grep --no-group-separator -A 1 "$gene_name" >reference_sequences.fasta
+grep --no-group-separator -A 1 "$taxa_rank_name" Nemat-mtDB_v1.0.fasta | grep --no-group-separator -A 1 "$gene_name" >reference_sequences.fasta
 
 ### Concatenate contigs and reference sequences and align them
 cat annotated_nematode_nt_sequences.fasta reference_sequences.fasta >working_seqeunces.fasta<br/>mafft --adjustdirectionaccurately working_sequences.fasta working_sequences.aln.fasta
