@@ -2,6 +2,9 @@
 ## Required Software
 Unix OS or Unix Emulator<br/>Fastqc<br/>trimmomatic<br/>Spades<br/>BLASTn and BLASTx<br/>Quast<br/>MITOS<br/>python
 
+# Data
+NCBI BioProject: PRJNA852289<br/>You can use any sample, for example: Sample 1EA:<br/>https://trace.ncbi.nlm.nih.gov/Traces/?view=run_browser&acc=SRR19860262&display=download
+
 ## Install in your OS basic environment or create a custom environment for 
 conda create --name ENVIRONMENT_NAME python=3.9 ipykernel -y
 
