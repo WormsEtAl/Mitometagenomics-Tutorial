@@ -1,6 +1,6 @@
 # Mitochondrial Metagenomics Tutorial
 ## Required Software
-Unix OS or Unix Emulator<br/>Fastqc<br/>trimmomatic<br/>Spades<br/>BLASTn and BLASTx<br/>Quast<br/>MITOS<br/>python
+Unix OS or Unix Emulator<br/>python<br/>Fastqc<br/>Trimmomatic<br/>Spades<br/>BLASTn and BLASTx<br/>Quast<br/>MITOS (or use the webserver)<br/>Sequence aligner (e.g. MAFFT)<br/>Phylogenetic tree tool (e.g. FastTree)
 
 ## Data
 NCBI BioProject: PRJNA852289<br/>You can use any sample, for example: Sample 1EA:<br/>https://trace.ncbi.nlm.nih.gov/Traces/?view=run_browser&acc=SRR19860262&display=download
@@ -74,18 +74,35 @@ blastn \
 <br/>-oufmt "6 qseqid sseqid pident qcovs length qstart qend sstart send gaps bitscore evalue" \
 <br/>-out blastn_output.tsv
 
-### Extract contig IDs that are most likely Nematode using BLASTn hits that match your chosen cutoffs
+### Extract contig IDs that are most likely Nematoda using BLASTn hits that match your chosen cutoffs
 awk -v cutoff1="98" '$3 >= cutoff1 {print}' blastn_output.tsv | awk -v cutoff2="80" '$4 >= cutoff2 {print}'| cut -f2 -d":" | head -n1 | awk -F"|" '{print $(NF-1),$NF}'| cut -f1 >nematode-mito-contigids.list
+
+### Extract nematode sequences from the assembly
+grep --no-group-separator -A 1 -f nematode-mito-contigids.list contigs.fasta >nematode_contigs.fasta
 
 ### Extract the top taxonomic BLASTn hits 
 while read -r line
 <br/>do
 <br/>grep -w "$line" blastn_output.tsv | head -n1
-<br/>done<nematode-mito-contigids.list | cut -f2
+<br/>done<nematode-mito-contigids.list | cut -f2 >top_blastn_hits.tsv
 
 ### Extract hits that match an expected taxon
 while read -r line
 <br/>do
 <br/>grep -w "$line" blastn_output.tsv
 <br/>done<species.list | cut -f2
+
+## Annotate the nematode contigs
+Upload the candidate nematode contig sequences to the MITOS server for annotation at:<br/>https://usegalaxy.eu/root?tool_id=toolshed.g2.bx.psu.edu%2Frepos%2Fiuc%2Fmitos2%2Fmitos2%2F2.1.3%20galaxy0<br/>Make sure to select the Invertebrate (5) genetic code for translation.
+
+## Phylogenetic Confirmation
+### Extract relevant reference sequences using target taxonomic rank and gene
+grep --no-group-separator -A 1 "$taxa_rank_name" Nemat-mtDB_v#.#.fasta | grep --no-group-separator -A 1 "$gene_name" >reference_sequences.fasta
+
+### Concatenate contigs and reference sequences and align them
+cat annotated_nematode_nt_sequences.fasta reference_sequences.fasta >working_seqeunces.fasta
+mafft --adjustdirectionaccurately working_sequences.fasta working_sequences.aln.fasta
+
+### Build phylogenetic tree and confirm contig sequence placement within predicted clades
+FastTree -nt -gtr working_sequences.aln.fasta >working_sequences.tree
 
