@@ -100,8 +100,7 @@ Upload the candidate nematode contig sequences to the MITOS server for annotatio
 grep --no-group-separator -A 1 "$taxa_rank_name" Nemat-mtDB_v#.#.fasta | grep --no-group-separator -A 1 "$gene_name" >reference_sequences.fasta
 
 ### Concatenate contigs and reference sequences and align them
-cat annotated_nematode_nt_sequences.fasta reference_sequences.fasta >working_seqeunces.fasta
-mafft --adjustdirectionaccurately working_sequences.fasta working_sequences.aln.fasta
+cat annotated_nematode_nt_sequences.fasta reference_sequences.fasta >working_seqeunces.fasta<br/>mafft --adjustdirectionaccurately working_sequences.fasta working_sequences.aln.fasta
 
 ### Build phylogenetic tree and confirm contig sequence placement within predicted clades
 FastTree -nt -gtr working_sequences.aln.fasta >working_sequences.tree
